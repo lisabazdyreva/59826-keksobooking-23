@@ -140,5 +140,8 @@ const createAd = () => {
 };
 
 const arrayLength = 10;
-const temporaryData = new Array(arrayLength).fill(null).map(() => createAd());
-console.log(temporaryData);
+const temporaryData = function (length) {
+  return new Array(length).fill(null).map(() => createAd());
+};
+
+temporaryData(arrayLength);
