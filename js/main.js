@@ -1,6 +1,5 @@
-import {createTemporaryData} from './get-temporary-data.js';
+import {getTemporaryData, newData} from './get-temlate-cards.js';
 
-const arrayLength = 10;
-createTemporaryData(arrayLength);
+getTemporaryData(newData);
 
 

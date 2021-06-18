@@ -52,7 +52,7 @@ const createAd = () => {
   ];
 
   avatar = `img/avatars/user${getAvatarId()}.png`;
-  const price = getIntegerRangeValue(10, 1000);
+  const price = getIntegerRangeValue(1000, 200000);
   const rooms = getIntegerRangeValue(1, 15);
   const guests = getIntegerRangeValue(1, 20);
   const features = getUniqueArray(FEATURES, FEATURES.length);
@@ -80,7 +80,7 @@ const createAd = () => {
       address: `${latLocation}, ${lngLocation}`,
       description: `Amazing ${type} is placed in ${latLocation}, ${lngLocation}. The price is ${price}. There are ${rooms} rooms in the ${type}.
       We are ready to accept ${guests} guests. There are some features for guests like: ${features.join(', ')}. Welcome!`,
-      title: `Amazing ${rooms} rooms in ${type} for ${price}`,
+      title: `Amazing ${rooms} rooms in ${type} for ${price}$`,
     },
     location: {
       lat: latLocation,
