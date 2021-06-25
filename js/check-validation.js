@@ -33,20 +33,22 @@ const checkPriceValidity = () => {
 
 const checkRoomNumberCapacityValidity = () => {
   const ROOMS_FOR_GUESTS = {
-    1 : [1],
+    1: [1],
     2: [1, 2],
     3: [1, 2, 3],
     100: [0],
   };
 
-  for (let i = 0; i < capacity.children.length; i++) {
-    const isNonDisabledOptions = ROOMS_FOR_GUESTS[+roomNumber.value].includes(+capacity.children[i].value);
-    capacity.children[i].disabled = !isNonDisabledOptions;
-    if (+roomNumber.value === 100) {
-      capacity.children[i].selected = true;
+  for (const option of capacity.children) {
+    const isIncludes = ROOMS_FOR_GUESTS[+roomNumber.value].includes(+option.value);
+    option.disabled = !isIncludes;
+
+    if (option.disabled === true) {
+      option.removeAttribute('selected');
     }
-    if (+roomNumber.value === 1 || +roomNumber.value === 2 || +roomNumber.value === 3) {
-      capacity.children[i].selected = false; // в доме не меняется
+
+    if (option.disabled === false && (+option.value === 1 || +option.value === 0)) {
+      option.setAttribute('selected', '');
     }
   }
 };
