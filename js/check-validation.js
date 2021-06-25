@@ -3,9 +3,13 @@ const title = form.querySelector('#title');
 const price = form.querySelector('#price');
 const roomNumber = form.querySelector('#room_number');
 const capacity = form.querySelector('#capacity');
+const type = form.querySelector('#type');
+const time = form.querySelector('.ad-form__element--time');
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
+let minPrice = 1000;
+const maxPrice = 1000000;
 
 const checkTitleValidity = () => {
   const lengthValue = title.value.length;
@@ -21,10 +25,10 @@ const checkTitleValidity = () => {
 
 
 const checkPriceValidity = () => {
-  if (price.value < 1) {
-    price.setCustomValidity('Цена не может быть ниже 0');
-  } else if (price.value > 1000000) {
-    price.setCustomValidity('Цена не может быть выше 1000000');
+  if (price.value < minPrice) {
+    price.setCustomValidity(`Цена не может быть ниже ${minPrice}`);
+  } else if (price.value > maxPrice) {
+    price.setCustomValidity(`Цена не может быть выше ${maxPrice}`);
   } else {
     price.setCustomValidity('');
   }
@@ -53,11 +57,46 @@ const checkRoomNumberCapacityValidity = () => {
   }
 };
 
+const checkTypeValidity = () => {
+  switch (type.value) {
+    case 'bungalow':
+      minPrice = 0;
+      break;
+    case 'flat':
+      minPrice = 1000;
+      break;
+    case 'palace':
+      minPrice = 10000;
+      break;
+    case 'house':
+      minPrice = 5000;
+      break;
+    case 'hotel':
+      minPrice = 3000;
+      break;
+    default:
+      minPrice = 1000;
+  }
+  price.placeholder = minPrice;
+};
+
+const checkTimeValidity = (evt) => {
+  const timeIn = time.querySelector('#timein');
+  const timeOut = time.querySelector('#timeout');
+  if (evt.target === timeIn) {
+    timeOut.value = evt.target.value;
+  } else if (evt.target === timeOut) {
+    timeIn.value = evt.target.value;
+  }
+};
+
 
 const checkValidity = () => {
   price.addEventListener('input', checkPriceValidity);
   title.addEventListener('input', checkTitleValidity);
   roomNumber.addEventListener('change', checkRoomNumberCapacityValidity);
+  type.addEventListener('change', checkTypeValidity);
+  time.addEventListener('change', checkTimeValidity);
 };
 
 export {checkValidity};
