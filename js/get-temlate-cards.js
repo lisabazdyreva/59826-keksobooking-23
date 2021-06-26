@@ -5,11 +5,10 @@ const newData = createTemporaryData(arrayLength);
 
 const getTemporaryData = function (data) {
   const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
-  const map = document.querySelector('#map-canvas');
+  const g = document.createElement('div');
 
-  return data.forEach((arr) => {
+  data.forEach((arr) => {
     const newCardTemplate = cardTemplate.cloneNode(true);
-
     (arr.offer.title.length !== 0)
       ? newCardTemplate.querySelector('.popup__title').textContent = arr.offer.title
       : newCardTemplate.querySelector('.popup__title').classList.add('hidden');
@@ -89,8 +88,9 @@ const getTemporaryData = function (data) {
       photosBlock.classList.add('hidden');
     }
 
-    map.appendChild(newCardTemplate);
+    g.appendChild(newCardTemplate);
   });
+  return g;
 };
 
 export {getTemporaryData, newData};
