@@ -1,23 +1,25 @@
 import {getFloatRangeValue, getIntegerRangeValue} from './utils/get-random-value.js';
 
-const getUniqueArray = (valuesList, length) => {
-  const arrayValuesLength = getIntegerRangeValue(1, length);
-  const arrayValues = new Array(arrayValuesLength).fill(null);
-  arrayValues.map((value, indexNum, arr) => {
-    let indexValue = valuesList[getIntegerRangeValue(0, (length - 1))];
-    while (arr.includes(indexValue)) {
-      indexValue = valuesList[getIntegerRangeValue(0, (length - 1))];
-    }
-    arr[indexNum] = indexValue;
-  });
-  return arrayValues;
-};
-
 const arrayId = [];
 const arrayIdRandomOrder = [];
 const idArrayLength = 11;
 let avatar;
 let index = 0;
+
+const getUniqueArray = (valuesList, length) => {
+  const arrayLengthValue = getIntegerRangeValue(1, length);
+  const emptyArray = new Array(arrayLengthValue).fill(null);
+
+  emptyArray.map((value, i, arr) => {
+    let indexValue = valuesList[getIntegerRangeValue(0, (length - 1))];
+    while (arr.includes(indexValue)) {
+      indexValue = valuesList[getIntegerRangeValue(0, (length - 1))];
+    }
+    arr[i] = indexValue;
+  });
+  return emptyArray;
+};
+
 
 for (let id = 1; id < idArrayLength; id++) {
   if (id >= 10) {
@@ -28,7 +30,7 @@ for (let id = 1; id < idArrayLength; id++) {
 }
 
 const getRandomOrderArray = (arr) => {
-  for (let indexValue = 0; indexValue < arr.length;  indexValue++) {
+  for (let i = 0; i < arr.length;  i++) {
     let value = arr[getIntegerRangeValue(0, arr.length - 1)];
     while (arrayIdRandomOrder.includes(value)) {
       value = arr[getIntegerRangeValue(0, arr.length - 1)];
@@ -50,7 +52,6 @@ const createAd = () => {
     'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
     'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
   ];
-
   avatar = `img/avatars/user${getAvatarId()}.png`;
   const price = getIntegerRangeValue(1000, 200000);
   const rooms = getIntegerRangeValue(1, 15);
@@ -62,7 +63,6 @@ const createAd = () => {
   const checkout = CHECKOUTS[getIntegerRangeValue(0, CHECKOUTS.length-1)];
   const latLocation = getFloatRangeValue(35.65000, 35.70000, 5);
   const lngLocation = getFloatRangeValue(139.70000, 139.80000, 5);
-
 
   return {
     author: {
@@ -90,5 +90,4 @@ const createAd = () => {
 };
 
 const createTemporaryData = (length) => new Array(length).fill(null).map(() => createAd());
-
 export {createTemporaryData};

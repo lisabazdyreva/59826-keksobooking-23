@@ -5,14 +5,21 @@ const roomNumber = form.querySelector('#room_number');
 const capacity = form.querySelector('#capacity');
 const type = form.querySelector('#type');
 const time = form.querySelector('.ad-form__element--time');
-
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
-let minPrice = 1000;
 const maxPrice = 1000000;
+const ROOMS_FOR_GUESTS = {
+  1: [1],
+  2: [1, 2],
+  3: [1, 2, 3],
+  100: [0],
+};
+let minPrice = 1000;
+
 
 const checkTitleValidity = () => {
   const lengthValue = title.value.length;
+
   if (lengthValue < MIN_TITLE_LENGTH) {
     title.setCustomValidity(`Ещё ${MIN_TITLE_LENGTH - lengthValue} символов`);
   } else if (lengthValue > MAX_TITLE_LENGTH) {
@@ -36,13 +43,6 @@ const checkPriceValidity = () => {
 };
 
 const checkRoomNumberCapacityValidity = () => {
-  const ROOMS_FOR_GUESTS = {
-    1: [1],
-    2: [1, 2],
-    3: [1, 2, 3],
-    100: [0],
-  };
-
   for (const option of capacity.children) {
     const isIncludes = ROOMS_FOR_GUESTS[+roomNumber.value].includes(+option.value);
     option.disabled = !isIncludes;
@@ -83,6 +83,7 @@ const checkTypeValidity = () => {
 const checkTimeValidity = (evt) => {
   const timeIn = time.querySelector('#timein');
   const timeOut = time.querySelector('#timeout');
+
   if (evt.target === timeIn) {
     timeOut.value = evt.target.value;
   } else if (evt.target === timeOut) {

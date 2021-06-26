@@ -1,25 +1,17 @@
-import {getTemporaryData, newData} from './get-temlate-cards.js';
+import {getTemplateCards, data} from './get-template-cards.js';
 import {setActiveStateElements} from './toggle-state.js';
 
-const createMap = () => {
+const map = L.map('map-canvas');
+const address = document.querySelector('#address');
+const INITIAL_LAT_LNG = {
+  lat: 35.68950,
+  lng: 139.69171,
+};
+const elements = getTemplateCards(data).children;
+address.value = `${INITIAL_LAT_LNG.lat}, ${INITIAL_LAT_LNG.lng}`;
 
-  const map = L.map('map-canvas');
-  const initialLatLng = {
-    lat: 35.68950,
-    lng: 139.69171,
-  };
-  const address = document.querySelector('#address');
-  address.value = `${initialLatLng.lat}, ${initialLatLng.lng}`;
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'},
-  ).addTo(map);
-  map
-    .on('load', () => {
-      setActiveStateElements();
-    })
-    .setView(initialLatLng , 13);
-
+const createMainCustomMarker = () => {
   const mainCustomIcon = L.icon(
     {
       iconUrl: './img/main-pin.svg',
@@ -29,26 +21,23 @@ const createMap = () => {
   );
 
   const mainMarker = L.marker (
-    initialLatLng,
+    INITIAL_LAT_LNG,
     {
       draggable: true,
       icon: mainCustomIcon,
     },
   );
 
-  mainMarker.addTo(map);
+  mainMarker
+    .addTo(map)
+    .on('moveend', (evt) => {
+      const valueLatLng = evt.target.getLatLng();
+      address.value = `${valueLatLng.lat.toFixed(5)}, ${valueLatLng.lng.toFixed(5)}`;
+    });
+};
 
-  mainMarker.on('moveend', (evt) => {
-    const valueLatLng = evt.target.getLatLng();
-    address.value = `${valueLatLng.lat.toFixed(5)}, ${valueLatLng.lng.toFixed(5)}`;
-  });
-
-  //добавление объявлений
-
-
-  const elements = getTemporaryData(newData).children;
-
-  newData.forEach((item, index) => {
+const createCustomMarkers = () => {
+  data.forEach((item, index) => {
 
     const icon = L.icon({
       iconUrl: './img/pin.svg',
@@ -69,7 +58,22 @@ const createMap = () => {
       .addTo(map)
       .bindPopup(elements[index]);
   });
+};
 
+
+const createMap = () => {
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'},
+  ).addTo(map);
+
+  map
+    .on('load', () => {
+      setActiveStateElements();
+    })
+    .setView(INITIAL_LAT_LNG , 13);
+
+  createMainCustomMarker();
+  createCustomMarkers();
 };
 
 export {createMap};
