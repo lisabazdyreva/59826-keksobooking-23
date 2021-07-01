@@ -1,4 +1,3 @@
-import {getTemplateCards, data} from './get-template-cards.js';
 import {setActiveStateElements} from './toggle-state.js';
 
 const map = L.map('map-canvas');
@@ -7,38 +6,26 @@ const INITIAL_LAT_LNG = {
   lat: 35.68950,
   lng: 139.69171,
 };
-const elements = getTemplateCards(data).children;
 address.value = `${INITIAL_LAT_LNG.lat}, ${INITIAL_LAT_LNG.lng}`;
 
+const mainCustomIcon = L.icon(
+  {
+    iconUrl: './img/main-pin.svg',
+    iconSize: [52, 53],
+    iconAnchor: [26, 52],
+  },
+);
+const mainMarker = L.marker (
+  INITIAL_LAT_LNG,
+  {
+    draggable: true,
+    icon: mainCustomIcon,
+  },
+);
 
-const createMainCustomMarker = () => {
-  const mainCustomIcon = L.icon(
-    {
-      iconUrl: './img/main-pin.svg',
-      iconSize: [52, 53],
-      iconAnchor: [26, 52],
-    },
-  );
 
-  const mainMarker = L.marker (
-    INITIAL_LAT_LNG,
-    {
-      draggable: true,
-      icon: mainCustomIcon,
-    },
-  );
-
-  mainMarker
-    .addTo(map)
-    .on('moveend', (evt) => {
-      const valueLatLng = evt.target.getLatLng();
-      address.value = `${valueLatLng.lat.toFixed(5)}, ${valueLatLng.lng.toFixed(5)}`;
-    });
-};
-
-const createCustomMarkers = () => {
-  data.forEach((item, index) => {
-
+const createCustomMarkers = (arr, elements) => {
+  arr.forEach((item, index) => {
     const icon = L.icon({
       iconUrl: './img/pin.svg',
       iconSize: [40, 40],
@@ -56,10 +43,9 @@ const createCustomMarkers = () => {
 
     marker
       .addTo(map)
-      .bindPopup(elements[index]);
+      .bindPopup(elements.children[index]);
   });
 };
-
 
 const createMap = () => {
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -72,8 +58,20 @@ const createMap = () => {
     })
     .setView(INITIAL_LAT_LNG , 13);
 
-  createMainCustomMarker();
-  createCustomMarkers();
+  mainMarker
+    .addTo(map)
+    .on('moveend', (evt) => {
+      const valueLatLng = evt.target.getLatLng();
+      address.value = `${valueLatLng.lat.toFixed(5)}, ${valueLatLng.lng.toFixed(5)}`;
+    });
+
 };
 
-export {createMap};
+const setInitialLatLngValue = () => {
+  map.setView(INITIAL_LAT_LNG, 13);
+  mainMarker.setLatLng(INITIAL_LAT_LNG);
+  address.value = `${INITIAL_LAT_LNG.lat}, ${INITIAL_LAT_LNG.lng}`;
+};
+
+
+export {createMap, createCustomMarkers, setInitialLatLngValue};
