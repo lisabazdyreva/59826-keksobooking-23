@@ -1,12 +1,7 @@
-import {createTemporaryData} from './get-temporary-data.js';
-
-const dataLength = 10;
-const data = createTemporaryData(dataLength);
 const popupElements = document.createElement('div');
 
 const getTemplateCards = function (arr) {
   const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
-
   arr.forEach((item) => {
     const newCardTemplate = cardTemplate.cloneNode(true);
     const popupTitle = newCardTemplate.querySelector('.popup__title');
@@ -41,9 +36,11 @@ const getTemplateCards = function (arr) {
       ? popupTextTime.textContent = `Заезд после ${item.offer.checkin}, выезд до ${item.offer.checkout}`
       : popupTextTime.classList.add('hidden');
 
-    (item.offer.description.length !== 0)
-      ? popupDescription.textContent = item.offer.description
-      : popupDescription.classList.add('hidden');
+    if (item.offer.description) {
+      (item.offer.description.length !== 0)
+        ? popupDescription.textContent = item.offer.description
+        : popupDescription.classList.add('hidden');
+    }
 
     (item.author.avatar.length !== 0)
       ? popupAvatar.src = item.author.avatar
@@ -75,13 +72,16 @@ const getTemplateCards = function (arr) {
     const popupFeature = popupFeatures.querySelectorAll('.popup__feature');
     const popupFeatureElement = document.createDocumentFragment();
 
-    item.offer.features.forEach((feature) => {
-      popupFeature.forEach((elem) => {
-        if (elem.classList.value.includes(feature)) {
-          popupFeatureElement.appendChild(elem);
-        }
+    if (item.offer.features) {
+      item.offer.features.forEach((feature) => {
+        popupFeature.forEach((elem) => {
+          if (elem.classList.value.includes(feature)) {
+            popupFeatureElement.appendChild(elem);
+          }
+        });
       });
-    });
+    }
+
 
     if (popupFeatureElement.children.length !== 0) {
       popupFeatures.textContent = '';
@@ -90,11 +90,14 @@ const getTemplateCards = function (arr) {
       popupFeatures.classList.add('hidden');
     }
 
-    item.offer.photos.forEach((elem) => {
-      const newPhoto = popupPhoto.cloneNode(false);
-      newPhoto.src = elem;
-      popupPhotoElement.appendChild(newPhoto);
-    });
+    if(item.offer.photos) {
+      item.offer.photos.forEach((elem) => {
+        const newPhoto = popupPhoto.cloneNode(false);
+        newPhoto.src = elem;
+        popupPhotoElement.appendChild(newPhoto);
+      });
+    }
+
 
     if (popupPhotoElement.children.length !== 0) {
       popupPhotos.textContent = '';
@@ -108,4 +111,4 @@ const getTemplateCards = function (arr) {
   return popupElements;
 };
 
-export {getTemplateCards, data};
+export {getTemplateCards};
