@@ -1,8 +1,10 @@
 const popupElements = document.createElement('div');
+const createCards = function (arr) {
 
-const getTemplateCards = function (arr) {
+  popupElements.innerHTML= '';
   const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
-  arr.forEach((item) => {
+  const newArr = arr.slice('');
+  newArr.forEach((item) => {
     const newCardTemplate = cardTemplate.cloneNode(true);
     const popupTitle = newCardTemplate.querySelector('.popup__title');
     const popupTextAddress = newCardTemplate.querySelector('.popup__text--address');
@@ -105,10 +107,10 @@ const getTemplateCards = function (arr) {
     } else {
       popupPhotos.classList.add('hidden');
     }
-
     popupElements.appendChild(newCardTemplate);
   });
+
   return popupElements;
 };
 
-export {getTemplateCards};
+export {createCards};
