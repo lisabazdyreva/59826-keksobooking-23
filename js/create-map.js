@@ -23,8 +23,17 @@ const mainMarker = L.marker (
   },
 );
 
+const markerGroup = L.layerGroup();
+
+const clearAll = () => {
+  markerGroup.clearLayers();
+};
 
 const createCustomMarkers = (arr, elements) => {
+  if(arr.length > 10) {
+    arr = arr.slice(0, 10);
+  }
+
   arr.forEach((item, index) => {
     const icon = L.icon({
       iconUrl: './img/pin.svg',
@@ -42,10 +51,13 @@ const createCustomMarkers = (arr, elements) => {
       });
 
     marker
-      .addTo(map)
+      .addTo(markerGroup)
       .bindPopup(elements.children[index]);
   });
+
+  markerGroup.addTo(map);
 };
+
 
 const createMap = () => {
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -74,4 +86,4 @@ const setInitialLatLngValue = () => {
 };
 
 
-export {createMap, createCustomMarkers, setInitialLatLngValue};
+export {createMap, createCustomMarkers, setInitialLatLngValue, clearAll};
