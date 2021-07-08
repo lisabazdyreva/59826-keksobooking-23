@@ -1,9 +1,9 @@
 const popupElements = document.createElement('div');
 const createCards = function (arr) {
-
   popupElements.innerHTML= '';
   const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
   const newArr = arr.slice('');
+
   newArr.forEach((item) => {
     const newCardTemplate = cardTemplate.cloneNode(true);
     const popupTitle = newCardTemplate.querySelector('.popup__title');

@@ -30,6 +30,9 @@ const clearAll = () => {
 };
 
 const createCustomMarkers = (arr, elements) => {
+  if(arr.length > 10) {
+    arr = arr.slice(0, 10);
+  }
 
   arr.forEach((item, index) => {
     const icon = L.icon({
