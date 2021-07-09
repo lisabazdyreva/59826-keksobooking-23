@@ -12,5 +12,13 @@ const setActiveStateElements = () => {
   }
 };
 
-export {setActiveStateElements};
+
+const setDisableFilters = () => {
+  filtersForm.classList.add('map__filters--disabled');
+  for (const elements of filtersForm.children) {
+    elements.disabled = true;
+  }
+};
+
+export {setActiveStateElements, setDisableFilters};
 

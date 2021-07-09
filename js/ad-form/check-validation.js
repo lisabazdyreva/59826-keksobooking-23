@@ -1,3 +1,5 @@
+import {addPreviewAvatar, addPreviewHousePhoto} from './get-user-photos-preview.js';
+
 const form = document.querySelector('.ad-form');
 const title = form.querySelector('#title');
 const price = form.querySelector('#price');
@@ -8,14 +10,13 @@ const time = form.querySelector('.ad-form__element--time');
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const maxPrice = 1000000;
+let minPrice = 1000;
 const ROOMS_FOR_GUESTS = {
   1: [1],
   2: [1, 2],
   3: [1, 2, 3],
   100: [0],
 };
-let minPrice = 1000;
-
 
 const checkTitleValidity = () => {
   const lengthValue = title.value.length;
@@ -42,6 +43,7 @@ const checkPriceValidity = () => {
   price.reportValidity();
 };
 
+
 const checkRoomNumberCapacityValidity = () => {
   for (const option of capacity.children) {
     const isIncludes = ROOMS_FOR_GUESTS[+roomNumber.value].includes(+option.value);
@@ -56,6 +58,7 @@ const checkRoomNumberCapacityValidity = () => {
     }
   }
 };
+
 
 const checkTypeValidity = () => {
   switch (type.value) {
@@ -91,13 +94,30 @@ const checkTimeValidity = (evt) => {
   }
 };
 
+const addCheckTypes = () => {
+  if (title === null || title === undefined) {
+    price.addEventListener('input', checkPriceValidity);
+    roomNumber.addEventListener('change', checkRoomNumberCapacityValidity);
+    type.addEventListener('change', checkTypeValidity);
+    time.addEventListener('change', checkTimeValidity);
+  } else if (price === null || price === undefined) {
+    title.addEventListener('input', checkTitleValidity);
+    roomNumber.addEventListener('change', checkRoomNumberCapacityValidity);
+    type.addEventListener('change', checkTypeValidity);
+    time.addEventListener('change', checkTimeValidity);
+  } else {
+    price.addEventListener('input', checkPriceValidity);
+    title.addEventListener('input', checkTitleValidity);
+    roomNumber.addEventListener('change', checkRoomNumberCapacityValidity);
+    type.addEventListener('change', checkTypeValidity);
+    time.addEventListener('change', checkTimeValidity);
+  }
+};
 
 const checkValidity = () => {
-  price.addEventListener('input', checkPriceValidity);
-  title.addEventListener('input', checkTitleValidity);
-  roomNumber.addEventListener('change', checkRoomNumberCapacityValidity);
-  type.addEventListener('change', checkTypeValidity);
-  time.addEventListener('change', checkTimeValidity);
+  addPreviewAvatar();
+  addPreviewHousePhoto();
+  addCheckTypes();
 };
 
 export {checkValidity};

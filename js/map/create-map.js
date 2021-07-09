@@ -1,4 +1,4 @@
-import {setActiveStateElements} from './toggle-state.js';
+import {setActiveStateElements} from '../toggle-state.js';
 
 const map = L.map('map-canvas');
 const address = document.querySelector('#address');
@@ -7,6 +7,7 @@ const INITIAL_LAT_LNG = {
   lng: 139.69171,
 };
 address.value = `${INITIAL_LAT_LNG.lat}, ${INITIAL_LAT_LNG.lng}`;
+const markerGroup = L.layerGroup();
 
 const mainCustomIcon = L.icon(
   {
@@ -15,6 +16,7 @@ const mainCustomIcon = L.icon(
     iconAnchor: [26, 52],
   },
 );
+
 const mainMarker = L.marker (
   INITIAL_LAT_LNG,
   {
@@ -23,11 +25,11 @@ const mainMarker = L.marker (
   },
 );
 
-const markerGroup = L.layerGroup();
 
 const clearAll = () => {
   markerGroup.clearLayers();
 };
+
 
 const createCustomMarkers = (arr, elements) => {
   if(arr.length > 10) {
@@ -78,6 +80,7 @@ const createMap = () => {
     });
 
 };
+
 
 const setInitialLatLngValue = () => {
   map.setView(INITIAL_LAT_LNG, 13);

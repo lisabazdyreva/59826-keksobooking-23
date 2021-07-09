@@ -1,3 +1,5 @@
+import {setDisableFilters} from '../toggle-state.js';
+
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 const dataError = errorTemplate.cloneNode(true);
 const dataErrorText = dataError.querySelector('p');
@@ -25,6 +27,7 @@ const openGetDataErrorMessage = () => {
 };
 
 const showGetDataError = () => {
+  setDisableFilters();
   openGetDataErrorMessage();
 };
 
