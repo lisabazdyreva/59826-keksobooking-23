@@ -1,6 +1,7 @@
-import {clearAll} from '../create-map.js';
+import {clearAll} from '../map/create-map.js';
 
 const mapFiltersForm = document.querySelector('.map__filters');
+const form = document.querySelector('.ad-form');
 
 const housingType = mapFiltersForm.querySelector('#housing-type');
 const housingPrice = mapFiltersForm.querySelector('#housing-price');
@@ -53,45 +54,18 @@ const PRICES = {
 };
 
 
-const isTypeOk = (item) => {
-  if (item.offer.type === TYPES[typeInitialValue]) {
-    return true;
-  } if (typeInitialValue === 'any') {
-    return true;
-  } else {
-    return false;
-  }
-};
+const isTypeOk = (item) => item.offer.type === TYPES[typeInitialValue] || typeInitialValue === 'any';
 
-const isPriceOk = (item) => {
-  if (priceInitialValue === 'any') {
-    return true;
-  } else if ((PRICES[priceInitialValue].MIN < +item.offer.price) && (+item.offer.price< PRICES[priceInitialValue].MAX)) {
-    return true;
-  } else {
-    return false;
-  }
-};
 
-const isRoomOk = (item) => {
-  if (+item.offer.rooms === +roomsInitialValue) {
-    return true;
-  } else if (roomsInitialValue === 'any') {
-    return true;
-  } else {
-    return false;
-  }
-};
+const isPriceOk = (item) => priceInitialValue === 'any' || ((PRICES[priceInitialValue].MIN < +item.offer.price)
+    && (+item.offer.price< PRICES[priceInitialValue].MAX));
 
-const isGuestsOk = (item) => {
-  if (item.offer.guests === +guestsInitialValue) {
-    return true;
-  } else if (guestsInitialValue === 'any') {
-    return true;
-  } else {
-    return false;
-  }
-};
+
+const isRoomOk = (item) => +item.offer.rooms === +roomsInitialValue || roomsInitialValue === 'any';
+
+const isGuestsOk = (item) => (guestsInitialValue === 'any')
+  || (item.offer.guests === +guestsInitialValue)
+  || ((item.offer.guests === 0) && (item.offer.rooms === 100));
 
 const isWifiOk = (item) => {
   if (wifiInitialValue === true && item.offer.features === undefined) {
@@ -179,7 +153,7 @@ const onSelectFilter = (data, cb, cbSecond) => {
     cbSecond(arr, result);
   };
 
-  mapFiltersForm.addEventListener('change', (evt) => {
+  const onChangeFilter = (evt) => {
     const target = evt.target;
     const value = target.value;
     const checked = target.checked;
@@ -211,8 +185,30 @@ const onSelectFilter = (data, cb, cbSecond) => {
     let arr = data.slice('');
     arr = arr.filter((item) => isEverythingOk(item));
     updateMap(arr);
-  });
+  };
 
+
+  const onResetFilter = () => {
+    typeInitialValue = 'any';
+    priceInitialValue = 'any';
+    roomsInitialValue = 'any';
+    guestsInitialValue = 'any';
+
+    wifiInitialValue = false;
+    dishwasherInitialValue = false;
+    parkingInitialValue = false;
+    washerInitialValue = false;
+    elevatorInitialValue = false;
+    conditionerInitialValue = false;
+
+    let arr = data.slice('');
+    arr = arr.filter((item) => isEverythingOk(item));
+    updateMap(arr);
+  };
+
+  mapFiltersForm.addEventListener('change', (evt) => onChangeFilter(evt));
+  form.addEventListener('reset', () => onResetFilter());
+  form.addEventListener('submit', () => onResetFilter());
 };
 
 const setFilters = (data, cb, cbSecond) => {

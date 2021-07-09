@@ -4,9 +4,9 @@ const success = successTemplate.querySelector('.success');
 const closeSuccessMessage = (evt) => {
   if (evt.key === 'Esc' || evt.key === 'Escape' || evt.type === 'click') {
     document.body.removeChild(success);
+    document.body.removeEventListener('click', closeSuccessMessage);
+    document.body.removeEventListener('keydown', closeSuccessMessage);
   }
-  document.body.removeEventListener('click', closeSuccessMessage);
-  document.body.removeEventListener('keydown', closeSuccessMessage);
 };
 
 const createSuccessMessage = () => {
