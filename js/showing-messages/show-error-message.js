@@ -1,9 +1,11 @@
+import {isEsc} from './utils.js';
+
 const errorTemplate = document.querySelector('#error').content;
 const error = errorTemplate.querySelector('.error');
 const errorButton = error.querySelector('.error__button');
 
 const closeErrorMessage = (evt) => {
-  if(evt.key === 'Esc' || evt.key === 'Escape' || evt.type === 'click') {
+  if (isEsc(evt)) {
     document.body.removeChild(error);
     errorButton.removeEventListener('click', closeErrorMessage);
     document.body.removeEventListener('keydown', closeErrorMessage);

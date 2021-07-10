@@ -1,4 +1,5 @@
 import {setDisableFilters} from '../toggle-state.js';
+import {isEsc} from './utils.js';
 
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 const dataError = errorTemplate.cloneNode(true);
@@ -12,7 +13,7 @@ const createGetDataErrorMessage = () => {
 };
 
 const closeGetDataErrorMessage = (evt) => {
-  if (evt.type === 'click' || evt.key === 'Ecs' || evt.key === 'Escape') {
+  if (isEsc(evt)) {
     document.body.removeChild(dataError);
     errorButton.removeEventListener('click', closeGetDataErrorMessage);
     document.body.removeEventListener('keydown', closeGetDataErrorMessage);

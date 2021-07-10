@@ -9,7 +9,6 @@ const getServerData = (onSuccess, onFail) => {
     .catch(() => onFail());
 };
 
-
 const sendServerData = (onSuccess, onFail, body) => {
   fetch(URL,
     {

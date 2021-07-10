@@ -1,8 +1,10 @@
+import {isEsc} from './utils.js';
+
 const successTemplate = document.querySelector('#success').content;
 const success = successTemplate.querySelector('.success');
 
 const closeSuccessMessage = (evt) => {
-  if (evt.key === 'Esc' || evt.key === 'Escape' || evt.type === 'click') {
+  if (isEsc(evt)) {
     document.body.removeChild(success);
     document.body.removeEventListener('click', closeSuccessMessage);
     document.body.removeEventListener('keydown', closeSuccessMessage);

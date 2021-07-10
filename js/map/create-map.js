@@ -1,4 +1,4 @@
-import {setActiveStateElements} from '../toggle-state.js';
+import {setActiveState} from '../toggle-state.js';
 
 const map = L.map('map-canvas');
 const address = document.querySelector('#address');
@@ -8,7 +8,6 @@ const INITIAL_LAT_LNG = {
 };
 address.value = `${INITIAL_LAT_LNG.lat}, ${INITIAL_LAT_LNG.lng}`;
 const markerGroup = L.layerGroup();
-
 const mainCustomIcon = L.icon(
   {
     iconUrl: './img/main-pin.svg',
@@ -26,17 +25,17 @@ const mainMarker = L.marker (
 );
 
 
-const clearAll = () => {
+const clearCustomMarkers = () => {
   markerGroup.clearLayers();
 };
 
 
-const createCustomMarkers = (arr, elements) => {
-  if(arr.length > 10) {
-    arr = arr.slice(0, 10);
+const createCustomMarkers = (cards, elements) => {
+  if (cards.length > 10) {
+    cards = cards.slice(0, 10);
   }
 
-  arr.forEach((item, index) => {
+  cards.forEach((item, index) => {
     const icon = L.icon({
       iconUrl: './img/pin.svg',
       iconSize: [40, 40],
@@ -68,7 +67,7 @@ const createMap = () => {
 
   map
     .on('load', () => {
-      setActiveStateElements();
+      setActiveState();
     })
     .setView(INITIAL_LAT_LNG , 13);
 
@@ -89,4 +88,4 @@ const setInitialLatLngValue = () => {
 };
 
 
-export {createMap, createCustomMarkers, setInitialLatLngValue, clearAll};
+export {createMap, setInitialLatLngValue, createCustomMarkers, clearCustomMarkers};

@@ -1,12 +1,12 @@
 import {setUserFormSubmit} from './ad-form/submit-form.js';
 import {showSuccessMessage} from './showing-messages/show-success-message.js';
 import {showErrorMessage} from './showing-messages/show-error-message.js';
-import {clearAllInputs} from './reset-form.js';
-import {checkValidity} from './ad-form/check-validation.js';
+import {clearForms} from './clear-all-forms.js';
+import {addValidationHandlers} from './ad-form/add-validation-handlers.js';
 
 const onSuccess = () => {
   showSuccessMessage();
-  clearAllInputs();
+  clearForms();
 };
 
 const onFail = () => {
@@ -14,7 +14,7 @@ const onFail = () => {
 };
 
 const sendForm = () => {
-  checkValidity();
+  addValidationHandlers();
   setUserFormSubmit(onSuccess, onFail);
 };
 

@@ -1,13 +1,14 @@
-const form = document.querySelector('.ad-form');
-const title = form.querySelector('#title');
-const price = form.querySelector('#price');
-const roomNumber = form.querySelector('#room_number');
-const capacity = form.querySelector('#capacity');
-const type = form.querySelector('#type');
-const timeIn = form.querySelector('#timein');
-const timeOut = form.querySelector('#timeout');
-const description = form.querySelector('#description');
-const features = form.querySelectorAll('.features__checkbox');
+import {
+  title,
+  price,
+  roomNumber,
+  capacity,
+  type,
+  timeIn,
+  timeOut,
+  description,
+  features
+} from './form-const.js';
 
 const clearForm = () => {
   title.value = '';
@@ -20,7 +21,7 @@ const clearForm = () => {
   description.value = '';
 
   for (const feature of features) {
-    if(feature.checked === true) {
+    if (feature.checked === true) {
       feature.checked = false;
     }
   }

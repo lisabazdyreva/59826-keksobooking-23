@@ -1,7 +1,7 @@
-const form = document.querySelector('.ad-form');
-const filtersForm = document.querySelector('.map__filters');
+import {form} from './ad-form/form-const.js';
+import {filtersForm} from './filters/filters-const.js';
 
-const setActiveStateElements = () => {
+const setActiveState = () => {
   form.classList.remove('ad-form--disabled');
   for (const fieldset of form.children) {
     fieldset.disabled = false;
@@ -20,5 +20,5 @@ const setDisableFilters = () => {
   }
 };
 
-export {setActiveStateElements, setDisableFilters};
+export {setActiveState, setDisableFilters};
 

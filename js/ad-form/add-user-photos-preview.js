@@ -1,9 +1,10 @@
-const fileAvatarInput = document.querySelector('#avatar');
-const previewAvatar = document.querySelector('.ad-form-header__preview img');
-const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
-const fileHouseInput = document.querySelector('#images');
-const blockPreviewHouse = document.querySelector('.ad-form__photo');
-
+import {
+  fileAvatarInput,
+  previewAvatar,
+  FILE_TYPES,
+  fileHouseInput,
+  blockPreviewHouse
+} from './form-const.js';
 
 const addPreviewAvatar = () => {
   fileAvatarInput.addEventListener('change', () => {
@@ -21,7 +22,6 @@ const addPreviewAvatar = () => {
 
       reader.readAsDataURL(file);
     }
-
   });
 };
 
@@ -33,19 +33,20 @@ const addPreviewHousePhoto = () => {
 
     const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
-    const newPhoto = document.createElement('img');
-    newPhoto.classList.add('popup__photo');
-    newPhoto.width = 60;
-    newPhoto.height = 60;
-    newPhoto.style.margin = '5px 5px 5px 5px';
-    newPhoto.alt = 'Фотография жилья';
+    const img = document.createElement('img');
+    img.classList.add('popup__photo');
+    img.width = 60;
+    img.height = 60;
+    img.style.margin = '5px 5px 5px 5px';
+    img.alt = 'Фотография жилья';
     blockPreviewHouse.style.height = '100%';
-    blockPreviewHouse.appendChild(newPhoto);
+    blockPreviewHouse.appendChild(img);
 
     if (matches) {
       const reader = new FileReader();
+
       reader.addEventListener('load', () => {
-        newPhoto.src = reader.result;
+        img.src = reader.result;
       });
 
       reader.readAsDataURL(file);

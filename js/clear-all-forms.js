@@ -4,14 +4,14 @@ import {setInitialLatLngValue} from './map/create-map.js';
 
 const form = document.querySelector('.ad-form');
 
-const clearAllInputs = () => {
+const clearForms = () => {
   clearForm();
   clearFilters();
   setInitialLatLngValue();
 };
 
 const resetForm = () => {
-  form.addEventListener('reset', () => clearAllInputs());
+  form.addEventListener('reset', () => clearForms());
 };
 
-export {clearAllInputs, resetForm};
+export {clearForms, resetForm};

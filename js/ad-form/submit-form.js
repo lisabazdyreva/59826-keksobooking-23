@@ -1,6 +1,5 @@
 import {sendServerData} from '../api.js';
-
-const form = document.querySelector('.ad-form');
+import {form} from './form-const.js';
 
 const setUserFormSubmit = (onSuccess, onFail) => {
   form.addEventListener('submit', (evt) => {
