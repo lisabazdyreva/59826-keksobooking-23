@@ -1,7 +1,6 @@
 const popupElements = document.createElement('div');
 
-
-const getTemplateCards = function (data) {
+const getTemplateCards = (data) => {
   popupElements.innerHTML= '';
   const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
   const cards = data.slice('');

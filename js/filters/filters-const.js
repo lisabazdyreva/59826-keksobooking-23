@@ -1,3 +1,28 @@
+const MAX_ARR_LENGTH = 10;
+const TYPES = {
+  'flat': 'Квартира',
+  'bungalow': 'Бунгало',
+  'house': 'Дом',
+  'palace': 'Дворец',
+  'hotel': 'Отель',
+  'any': ['Квартира', 'Бунгало', 'Дом', 'Дворец', 'Отель'],
+};
+
+const PRICES = {
+  middle: {
+    MIN: 10000,
+    MAX: 50000,
+  },
+  low: {
+    MIN: 0,
+    MAX: 10000,
+  },
+  high: {
+    MIN: 50000,
+    MAX: 1000000,
+  },
+};
+
 const filtersForm = document.querySelector('.map__filters');
 
 const filterType = filtersForm.querySelector('#housing-type');
@@ -16,31 +41,10 @@ const conditioner = filterFeatures.querySelector('#filter-conditioner');
 const selects = filtersForm.querySelectorAll('select');
 const features = filtersForm.querySelectorAll('.map__checkbox');
 
-const TYPES = {
-  flat: 'Квартира',
-  bungalow: 'Бунгало',
-  house: 'Дом',
-  palace: 'Дворец',
-  hotel: 'Отель',
-  any: ['Квартира', 'Бунгало', 'Дом', 'Дворец', 'Отель'],
-};
-
-const PRICES = {
-  middle: {
-    MIN: 10000,
-    MAX: 50000,
-  },
-  low: {
-    MIN: 0,
-    MAX: 10000,
-  },
-  high: {
-    MIN: 50000,
-    MAX: 1000000,
-  },
-};
-
 export {
+  MAX_ARR_LENGTH,
+  TYPES,
+  PRICES,
   filtersForm,
   filterType,
   filterPrice,
@@ -54,7 +58,5 @@ export {
   elevator,
   conditioner,
   selects,
-  features,
-  TYPES,
-  PRICES
+  features
 };

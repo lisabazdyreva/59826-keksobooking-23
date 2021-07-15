@@ -1,19 +1,19 @@
 import {
+  MIN_PRICES,
+  MIN_TITLE_LENGTH,
+  MAX_TITLE_LENGTH,
+  MAX_PRICE,
+  ROOMS_FOR_GUESTS,
   title,
   price,
   roomNumber,
   capacity,
   type,
-  time,
-  MIN_TITLE_LENGTH,
-  MAX_TITLE_LENGTH,
-  MAX_PRICE,
-  ROOMS_FOR_GUESTS
+  time
 } from './form-const.js';
 
-let minPrice = 1000;
 
-const checkTitleValidation = () => {
+const onTitleInput = () => {
   const titleLength = title.value.length;
 
   if (titleLength < MIN_TITLE_LENGTH) {
@@ -27,9 +27,9 @@ const checkTitleValidation = () => {
 };
 
 
-const checkPriceValidation = () => {
-  if (price.value < minPrice) {
-    price.setCustomValidity(`Цена не может быть ниже ${minPrice}`);
+const onPriceInput = () => {
+  if (price.value < price.min) {
+    price.setCustomValidity(`Цена не может быть ниже ${price.min}`);
   } else if (price.value > MAX_PRICE) {
     price.setCustomValidity(`Цена не может быть выше ${MAX_PRICE}`);
   } else {
@@ -39,7 +39,7 @@ const checkPriceValidation = () => {
 };
 
 
-const checkRoomNumberCapacityValidation = () => {
+const onRoomNumberChange = () => {
   for (const option of capacity.children) {
     const isIncludes = ROOMS_FOR_GUESTS[+roomNumber.value].includes(+option.value);
     option.disabled = !isIncludes;
@@ -55,30 +55,16 @@ const checkRoomNumberCapacityValidation = () => {
 };
 
 
-const checkTypeValidation = () => {
-  switch (type.value) {
-    case 'bungalow':
-      minPrice = 0;
-      break;
-    case 'flat':
-      minPrice = 1000;
-      break;
-    case 'palace':
-      minPrice = 10000;
-      break;
-    case 'house':
-      minPrice = 5000;
-      break;
-    case 'hotel':
-      minPrice = 3000;
-      break;
-    default:
-      minPrice = 1000;
+const onTypeChange = () => {
+  for (let i = 0; i < MIN_PRICES.length; i++) {
+    if (MIN_PRICES[i].name === type.value) {
+      price.placeholder = MIN_PRICES[i].minPrice;
+      price.min = MIN_PRICES[i].minPrice;
+    }
   }
-  price.placeholder = minPrice;
 };
 
-const checkTimeValidation = (evt) => {
+const onTimeChange = (evt) => {
   const timeIn = time.querySelector('#timein');
   const timeOut = time.querySelector('#timeout');
 
@@ -91,9 +77,9 @@ const checkTimeValidation = (evt) => {
 
 
 export {
-  checkTitleValidation,
-  checkPriceValidation,
-  checkRoomNumberCapacityValidation,
-  checkTypeValidation,
-  checkTimeValidation
+  onTitleInput,
+  onPriceInput,
+  onRoomNumberChange,
+  onTypeChange,
+  onTimeChange
 };

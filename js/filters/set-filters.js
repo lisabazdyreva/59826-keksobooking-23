@@ -1,6 +1,7 @@
 import {clearCustomMarkers} from '../map/create-map.js';
 import {form} from '../ad-form/form-const.js';
 import {
+  MAX_ARR_LENGTH,
   filtersForm,
   filterType,
   filterPrice,
@@ -18,7 +19,6 @@ import {
   makeFilterAll
 } from './check-filters-values.js';
 
-const MAX_ARR_LENGTH = 10;
 
 const mainFilters = [
   {
@@ -68,17 +68,18 @@ const featureFilters = [
 
 
 const setFilters = (data, updateCards, updateCustomMarkers) => {
+  let arrayOfFilteredElements = [];
+
+
   const filterAds = (ad) => {
     const isFiltersChecked = makeFilterAll(ad, mainFilters, featureFilters);
-    if (isFiltersChecked) {
+    if (isFiltersChecked && (arrayOfFilteredElements.length < MAX_ARR_LENGTH)) {
+      arrayOfFilteredElements.push(isFiltersChecked);
       return true;
     }
   };
 
   const updateMap = (cards) => {
-    if (cards.length > MAX_ARR_LENGTH) {
-      cards = cards.slice(0, MAX_ARR_LENGTH);
-    }
     const newCards = updateCards(cards);
     clearCustomMarkers();
     updateCustomMarkers(cards, newCards);
@@ -86,11 +87,13 @@ const setFilters = (data, updateCards, updateCustomMarkers) => {
 
   const getFilteredData = () => {
     let cards = data.slice('');
+    arrayOfFilteredElements = [];
     cards = cards.filter((item) => filterAds(item));
+
     updateMap(cards);
   };
 
-  const onFilterAds = (evt) => {
+  const onAdsFilter = (evt) => {
     for (const filter of mainFilters) {
       if (evt.target === filter.node) {
         filter.value = evt.target.value;
@@ -105,7 +108,7 @@ const setFilters = (data, updateCards, updateCustomMarkers) => {
     getFilteredData();
   };
 
-  const onResetFilter = () => {
+  const onFiltersReset = () => {
     for (const filter of mainFilters) {
       filter.value = 'any';
     }
@@ -116,9 +119,9 @@ const setFilters = (data, updateCards, updateCustomMarkers) => {
     getFilteredData();
   };
 
-  filtersForm.addEventListener('change', (evt) => onFilterAds(evt));
-  form.addEventListener('reset', () => onResetFilter());
-  form.addEventListener('submit', () => onResetFilter());
+  filtersForm.addEventListener('change', (evt) => onAdsFilter(evt));
+  form.addEventListener('reset', onFiltersReset);
+  form.addEventListener('submit', onFiltersReset);
 };
 
 export {setFilters};

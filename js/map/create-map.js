@@ -1,11 +1,14 @@
 import {setActiveState} from '../toggle-state.js';
+import {MAX_ARR_LENGTH} from '../filters/filters-const.js';
 
-const map = L.map('map-canvas');
-const address = document.querySelector('#address');
 const INITIAL_LAT_LNG = {
   lat: 35.68950,
   lng: 139.69171,
 };
+
+const map = L.map('map-canvas');
+const address = document.querySelector('#address');
+
 address.value = `${INITIAL_LAT_LNG.lat}, ${INITIAL_LAT_LNG.lng}`;
 const markerGroup = L.layerGroup();
 const mainCustomIcon = L.icon(
@@ -31,8 +34,8 @@ const clearCustomMarkers = () => {
 
 
 const createCustomMarkers = (cards, elements) => {
-  if (cards.length > 10) {
-    cards = cards.slice(0, 10);
+  if (cards.length > MAX_ARR_LENGTH) {
+    cards = cards.slice(0, MAX_ARR_LENGTH);
   }
 
   cards.forEach((item, index) => {

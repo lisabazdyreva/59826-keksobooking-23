@@ -4,6 +4,8 @@ import {PRICES, TYPES} from './filters-const.js';
 const getMainFilter = (ad, arr) => {
 
   const isType = () => ad.offer.type === TYPES[arr[0].value] || arr[0].value === 'any';
+
+
   const isPrice = () => arr[1].value === 'any' || ((PRICES[arr[1].value].MIN < +ad.offer.price)
       && (+ad.offer.price< PRICES[arr[1].value].MAX));
 
@@ -19,67 +21,31 @@ const getMainFilter = (ad, arr) => {
 
 const getFeatureFilter = (ad, arr) => {
 
-  const isWifiOk = () => {
-    if (arr[0].value === true && ad.offer.features === undefined) {
+  const isCheckFeature = (isChecked, value) => {
+    const features = ad.offer.features;
+
+    if (isChecked === true && features === undefined) {
       return false;
-    } else if (arr[0].value === true && ad.offer.features.includes('wifi')) {
+    } else if (isChecked === true && features.includes(value)) {
       return true;
-    } else if (arr[0].value === false) {
+    } else if (isChecked === false) {
       return true;
     }
   };
 
-  const isDishwasherOk = () => {
-    if (arr[1].value === true && ad.offer.features === undefined) {
-      return false;
-    } else if (arr[1].value === true && ad.offer.features.includes('dishwasher')) {
-      return true;
-    } else if (arr[1].value === false) {
-      return true;
-    }
-  };
+  const isWifi = () => isCheckFeature( arr[0].value, 'wifi');
 
-  const isParkingOk = () => {
-    if (arr[2].value === true && ad.offer.features === undefined) {
-      return false;
-    } else if (arr[2].value === true && ad.offer.features.includes('parking')) {
-      return true;
-    } else if (arr[2].value === false) {
-      return true;
-    }
-  };
+  const isDishwasher = () => isCheckFeature( arr[1].value, 'dishwasher');
 
-  const isWasherOk = () => {
-    if (arr[3].value === true && ad.offer.features === undefined) {
-      return false;
-    } else if (arr[3].value === true && ad.offer.features.includes('washer')) {
-      return true;
-    } else if (arr[3].value === false) {
-      return true;
-    }
-  };
+  const isParking = () => isCheckFeature( arr[2].value, 'parking');
 
-  const isElevatorOk = () => {
-    if (arr[4].value === true && ad.offer.features === undefined) {
-      return false;
-    } else if (arr[4].value === true && ad.offer.features.includes('elevator')) {
-      return true;
-    } else if (arr[4].value === false) {
-      return true;
-    }
-  };
+  const isWasher = () => isCheckFeature( arr[3].value, 'washer');
 
-  const isConditionerOk = () => {
-    if (arr[5].value === true && ad.offer.features === undefined) {
-      return false;
-    } else if (arr[5].value === true && ad.offer.features.includes('conditioner')) {
-      return true;
-    } else if (arr[5].value === false) {
-      return true;
-    }
-  };
+  const isElevator = () => isCheckFeature( arr[4].value, 'elevator');
 
-  return isWifiOk() && isDishwasherOk() && isParkingOk() && isWasherOk() && isElevatorOk() && isConditionerOk();
+  const isConditioner = () =>  isCheckFeature( arr[5].value, 'conditioner');
+
+  return isWifi() && isDishwasher() && isParking() && isWasher() && isElevator() && isConditioner();
 };
 
 
