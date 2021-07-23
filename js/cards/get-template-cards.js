@@ -95,9 +95,9 @@ const getTemplateCards = (data) => {
 
     if (card.offer.photos) {
       card.offer.photos.forEach((url) => {
-        const img = popupPhoto.cloneNode(false);
-        img.src = url;
-        popupPhotoElement.appendChild(img);
+        const photo = popupPhoto.cloneNode(false);
+        photo.src = url;
+        popupPhotoElement.appendChild(photo);
       });
     }
 

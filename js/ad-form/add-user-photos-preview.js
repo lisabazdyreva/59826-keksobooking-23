@@ -1,7 +1,7 @@
 import {
+  FILE_TYPES,
   fileAvatarInput,
   previewAvatar,
-  FILE_TYPES,
   fileHouseInput,
   blockPreviewHouse
 } from './form-const.js';
@@ -11,9 +11,9 @@ const addPreviewAvatar = () => {
     const file = fileAvatarInput.files[0];
     const fileName = file.name.toLowerCase();
 
-    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+    const isMatch = FILE_TYPES.some((type) => fileName.endsWith(type));
 
-    if (matches) {
+    if (isMatch) {
       const reader = new FileReader();
 
       reader.addEventListener('load', () => {
@@ -25,28 +25,27 @@ const addPreviewAvatar = () => {
   });
 };
 
-
 const addPreviewHousePhoto = () => {
   fileHouseInput.addEventListener('change', () => {
     const file = fileHouseInput.files[0];
     const fileName = file.name.toLowerCase();
 
-    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+    const isMatch = FILE_TYPES.some((type) => fileName.endsWith(type));
 
-    const img = document.createElement('img');
-    img.classList.add('popup__photo');
-    img.width = 60;
-    img.height = 60;
-    img.style.margin = '5px 5px 5px 5px';
-    img.alt = 'Фотография жилья';
+    const photo = document.createElement('img');
+    photo.classList.add('popup__photo');
+    photo.width = 60;
+    photo.height = 60;
+    photo.style.margin = '5px 5px 5px 5px';
+    photo.alt = 'Фотография жилья';
     blockPreviewHouse.style.height = '100%';
-    blockPreviewHouse.appendChild(img);
+    blockPreviewHouse.appendChild(photo);
 
-    if (matches) {
+    if (isMatch) {
       const reader = new FileReader();
 
       reader.addEventListener('load', () => {
-        img.src = reader.result;
+        photo.src = reader.result;
       });
 
       reader.readAsDataURL(file);
@@ -54,5 +53,11 @@ const addPreviewHousePhoto = () => {
   });
 };
 
+const removePhotos = () => {
+  blockPreviewHouse.textContent = '';
+  blockPreviewHouse.style.height = '70px';
+  previewAvatar.src = 'img/muffin-grey.svg';
+};
 
-export {addPreviewAvatar, addPreviewHousePhoto};
+
+export {addPreviewAvatar, addPreviewHousePhoto, removePhotos};

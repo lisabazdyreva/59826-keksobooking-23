@@ -8,28 +8,14 @@ const ROOMS_FOR_GUESTS = {
   100: [0],
 };
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
-const MIN_PRICES = [
-  {
-    name: 'bungalow',
-    minPrice: 0,
-  },
-  {
-    name: 'flat',
-    minPrice: 1000,
-  },
-  {
-    name: 'palace',
-    minPrice: 10000,
-  },
-  {
-    name: 'house',
-    minPrice: 5000,
-  },
-  {
-    name: 'hotel',
-    minPrice: 3000,
-  },
-];
+
+const minPrices = {
+  bungalow: 0,
+  flat: 1000,
+  palace: 10000,
+  house: 5000,
+  hotel: 3000,
+};
 
 const form = document.querySelector('.ad-form');
 const title = form.querySelector('#title');
@@ -55,7 +41,7 @@ export {
   MAX_PRICE,
   ROOMS_FOR_GUESTS,
   FILE_TYPES,
-  MIN_PRICES,
+  minPrices,
   form,
   title,
   price,

@@ -9,10 +9,14 @@ import {
   description,
   features
 } from './form-const.js';
+import {changeRoomNumber} from './check-validation.js';
+import {removePhotos} from './add-user-photos-preview.js';
 
 const clearForm = () => {
   title.value = '';
   price.value = '';
+  price.min = 1000;
+  price.placeholder = 1000;
   roomNumber.value = 1;
   capacity.value = 1;
   type.value = 'flat';
@@ -25,6 +29,8 @@ const clearForm = () => {
       feature.checked = false;
     }
   }
+  removePhotos();
+  changeRoomNumber();
 };
 
 export {clearForm};

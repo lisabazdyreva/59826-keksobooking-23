@@ -1,9 +1,9 @@
 import {
-  MIN_PRICES,
   MIN_TITLE_LENGTH,
   MAX_TITLE_LENGTH,
   MAX_PRICE,
   ROOMS_FOR_GUESTS,
+  minPrices,
   title,
   price,
   roomNumber,
@@ -28,9 +28,9 @@ const onTitleInput = () => {
 
 
 const onPriceInput = () => {
-  if (price.value < price.min) {
+  if (+price.value < +price.min) {
     price.setCustomValidity(`Цена не может быть ниже ${price.min}`);
-  } else if (price.value > MAX_PRICE) {
+  } else if (+price.value > MAX_PRICE) {
     price.setCustomValidity(`Цена не может быть выше ${MAX_PRICE}`);
   } else {
     price.setCustomValidity('');
@@ -39,10 +39,10 @@ const onPriceInput = () => {
 };
 
 
-const onRoomNumberChange = () => {
+const changeRoomNumber = () => {
   for (const option of capacity.children) {
-    const isIncludes = ROOMS_FOR_GUESTS[+roomNumber.value].includes(+option.value);
-    option.disabled = !isIncludes;
+    const isInclude = ROOMS_FOR_GUESTS[+roomNumber.value].includes(+option.value);
+    option.disabled = !isInclude;
 
     if (option.disabled === true) {
       option.removeAttribute('selected');
@@ -54,12 +54,16 @@ const onRoomNumberChange = () => {
   }
 };
 
+const onRoomNumberChange = () => {
+  changeRoomNumber();
+};
+
 
 const onTypeChange = () => {
-  for (let i = 0; i < MIN_PRICES.length; i++) {
-    if (MIN_PRICES[i].name === type.value) {
-      price.placeholder = MIN_PRICES[i].minPrice;
-      price.min = MIN_PRICES[i].minPrice;
+  for (const typeHouse in minPrices) {
+    if (typeHouse === type.value) {
+      price.placeholder = minPrices[typeHouse];
+      price.min = minPrices[typeHouse];
     }
   }
 };
@@ -81,5 +85,6 @@ export {
   onPriceInput,
   onRoomNumberChange,
   onTypeChange,
-  onTimeChange
+  onTimeChange,
+  changeRoomNumber
 };

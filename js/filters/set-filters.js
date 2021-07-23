@@ -1,127 +1,53 @@
-import {clearCustomMarkers} from '../map/create-map.js';
 import {form} from '../ad-form/form-const.js';
 import {
   MAX_ARR_LENGTH,
-  filtersForm,
-  filterType,
-  filterPrice,
-  filterRooms,
-  filterGuests,
-  wifi,
-  dishwasher,
-  parking,
-  washer,
-  elevator,
-  conditioner
+  filtersForm
 } from './filters-const.js';
-
-import {
-  makeFilterAll
-} from './check-filters-values.js';
-
-
-const mainFilters = [
-  {
-    value : filterType.value,
-    node: filterType,
-  },
-  {
-    value : filterPrice.value,
-    node: filterPrice,
-  },
-  {
-    value: filterRooms.value,
-    node: filterRooms,
-  },
-  {
-    value: filterGuests.value,
-    node: filterGuests,
-  },
-];
-
-const featureFilters = [
-  {
-    value: wifi.checked,
-    node: wifi,
-  },
-  {
-    value: dishwasher.checked,
-    node: dishwasher,
-  },
-  {
-    value: parking.checked,
-    node: parking,
-  },
-  {
-    value: washer.checked,
-    node: washer,
-  },
-  {
-    value: elevator.checked,
-    node: elevator,
-  },
-  {
-    value: conditioner.checked,
-    node: conditioner,
-  },
-];
+import {clearCustomMarkers} from '../map/create-map.js';
+import {filteringRules} from './check-filters-values.js';
 
 
 const setFilters = (data, updateCards, updateCustomMarkers) => {
-  let arrayOfFilteredElements = [];
+  let filteredAds  = [];
 
+  const filterElements = Array.from(document.querySelector('.map__filters').children);
 
-  const filterAds = (ad) => {
-    const isFiltersChecked = makeFilterAll(ad, mainFilters, featureFilters);
-    if (isFiltersChecked && (arrayOfFilteredElements.length < MAX_ARR_LENGTH)) {
-      arrayOfFilteredElements.push(isFiltersChecked);
-      return true;
+  const filterAds = (ads) => ads.filter((ad) => {
+
+    const isFiltersChecked = filterElements.every((filterElement) => (filterElement.value === 'any') ? true : filteringRules[filterElement.id](ad, filterElement));
+
+    if (isFiltersChecked && (filteredAds.length < MAX_ARR_LENGTH)) {
+      filteredAds.push(isFiltersChecked);
+      return isFiltersChecked;
     }
-  };
+
+  });
 
   const updateMap = (cards) => {
-    const newCards = updateCards(cards);
+    const updatedPins = updateCards(cards);
     clearCustomMarkers();
-    updateCustomMarkers(cards, newCards);
+    updateCustomMarkers(cards, updatedPins);
   };
 
-  const getFilteredData = () => {
+  const onFilterChange = () => {
     let cards = data.slice('');
-    arrayOfFilteredElements = [];
-    cards = cards.filter((item) => filterAds(item));
-
+    filteredAds = [];
+    cards = filterAds(cards);
     updateMap(cards);
   };
 
-  const onAdsFilter = (evt) => {
-    for (const filter of mainFilters) {
-      if (evt.target === filter.node) {
-        filter.value = evt.target.value;
-      }
-    }
-
-    for (const feature of featureFilters) {
-      if (evt.target === feature.node) {
-        feature.value = evt.target.checked;
-      }
-    }
-    getFilteredData();
+  const onFormReset = () => {
+    onFilterChange();
   };
 
-  const onFiltersReset = () => {
-    for (const filter of mainFilters) {
-      filter.value = 'any';
-    }
-
-    for (const feature of featureFilters) {
-      feature.value = false;
-    }
-    getFilteredData();
+  const onFormSubmit = () => {
+    onFilterChange();
   };
 
-  filtersForm.addEventListener('change', (evt) => onAdsFilter(evt));
-  form.addEventListener('reset', onFiltersReset);
-  form.addEventListener('submit', onFiltersReset);
+  filtersForm.addEventListener('change', onFilterChange);
+  form.addEventListener('reset', onFormReset);
+  form.addEventListener('submit', onFormSubmit);
+
 };
 
 export {setFilters};

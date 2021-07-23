@@ -1,10 +1,12 @@
-import {setActiveState} from '../toggle-state.js';
 import {MAX_ARR_LENGTH} from '../filters/filters-const.js';
+import {setActiveState} from '../toggle-state.js';
 
 const INITIAL_LAT_LNG = {
   lat: 35.68950,
   lng: 139.69171,
 };
+
+const INITIAL_SCALE = 13;
 
 const map = L.map('map-canvas');
 const address = document.querySelector('#address');
@@ -33,12 +35,12 @@ const clearCustomMarkers = () => {
 };
 
 
-const createCustomMarkers = (cards, elements) => {
+const createCustomMarkers = (cards, pins) => {
   if (cards.length > MAX_ARR_LENGTH) {
     cards = cards.slice(0, MAX_ARR_LENGTH);
   }
 
-  cards.forEach((item, index) => {
+  cards.forEach((card, index) => {
     const icon = L.icon({
       iconUrl: './img/pin.svg',
       iconSize: [40, 40],
@@ -47,8 +49,8 @@ const createCustomMarkers = (cards, elements) => {
 
     const marker = L.marker(
       {
-        lat: item.location.lat,
-        lng: item.location.lng,
+        lat: card.location.lat,
+        lng: card.location.lng,
       },
       {
         icon,
@@ -56,7 +58,7 @@ const createCustomMarkers = (cards, elements) => {
 
     marker
       .addTo(markerGroup)
-      .bindPopup(elements.children[index]);
+      .bindPopup(pins.children[index]);
   });
 
   markerGroup.addTo(map);
@@ -72,7 +74,7 @@ const createMap = () => {
     .on('load', () => {
       setActiveState();
     })
-    .setView(INITIAL_LAT_LNG , 13);
+    .setView(INITIAL_LAT_LNG , INITIAL_SCALE);
 
   mainMarker
     .addTo(map)
@@ -85,7 +87,7 @@ const createMap = () => {
 
 
 const setInitialLatLngValue = () => {
-  map.setView(INITIAL_LAT_LNG, 13);
+  map.setView(INITIAL_LAT_LNG, INITIAL_SCALE);
   mainMarker.setLatLng(INITIAL_LAT_LNG);
   address.value = `${INITIAL_LAT_LNG.lat}, ${INITIAL_LAT_LNG.lng}`;
 };

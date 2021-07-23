@@ -1,5 +1,6 @@
-import {sendServerData} from '../api.js';
 import {form} from './form-const.js';
+import {sendServerData} from '../api.js';
+import {onFormsReset} from '../clear-all-forms.js';
 
 const setUserFormSubmit = (onSuccess, onFail) => {
   form.addEventListener('submit', (evt) => {
@@ -9,6 +10,7 @@ const setUserFormSubmit = (onSuccess, onFail) => {
       () => onFail(),
       new FormData(evt.target),
     );
+    onFormsReset();
   });
 };
 

@@ -7,16 +7,16 @@ const setActiveState = () => {
     fieldset.disabled = false;
   }
   filtersForm.classList.remove('map__filters--disabled');
-  for (const elements of filtersForm.children) {
-    elements.disabled = false;
+  for (const filter of filtersForm.children) {
+    filter.disabled = false;
   }
 };
 
 
 const setDisableFilters = () => {
   filtersForm.classList.add('map__filters--disabled');
-  for (const elements of filtersForm.children) {
-    elements.disabled = true;
+  for (const filter of filtersForm.children) {
+    filter.disabled = true;
   }
 };
 

@@ -9,7 +9,6 @@ import {
 import {addPreviewAvatar, addPreviewHousePhoto} from './add-user-photos-preview.js';
 
 const setHandlers = () => {
-
   if (title === undefined || title === null) {
     price.addEventListener('input', onPriceInput);
   } else if (price === null || price === undefined) {
