@@ -1,3 +1,15 @@
+# Keks Booking learning project
+
+## Keks Booking description
+
+Keks Booking is a service for create a rent offers in Tokyo. User can add new offer or take a list of available apartments.
+
+
+
+
+
+
+
 # Личный проект «Кексобукинг»
 
 * Студент: [Елизавета Баздырева](https://up.htmlacademy.ru/javascript/23/user/59826).
