@@ -1,5 +1,5 @@
-# Keks Booking learning project
+# Keksobooking learning project
 
-## Keks Booking description
+## Keksobooking description
 
-Keks Booking is a service for create a rent offers in Tokyo. User can add new offer or take a list of available apartments.
+Keksobooking is a service for create a rent offers in Tokyo. User can add new offer or get a list of available apartments on interactive map.
