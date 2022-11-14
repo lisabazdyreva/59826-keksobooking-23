@@ -24,17 +24,20 @@ You can also add your rental ad using a convenient form.
 
 ## How to run app locally:
 
+
+
+- Clone repo with:
+```bash
+git clone git@github.com:lisabazdyreva/keksobooking.git
+```
+
+- Install dependencies:
+
+```bash
+npm install
+```
+
+- Run application:
 ```bash
 npm start
 ```
-
-- Clone repo with:
-git clone git@github.com:BentonFraizer/keksobooking.git
-go into the project folder with:
-cd keksobooking/
-install all dependencies with:
-npm install
-run in the dev mode with:
-npm start
-
-
