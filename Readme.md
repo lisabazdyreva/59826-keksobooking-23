@@ -18,8 +18,8 @@ You can also add your rental ad using a convenient form.
 
 ## Stack
 
-*Vanilla Javascript (ES18)
-*Leaflet
+- Vanilla Javascript (ES18)
+- Leaflet
 
 ## How to run app:
 
