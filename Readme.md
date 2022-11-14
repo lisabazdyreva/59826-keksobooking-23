@@ -11,16 +11,30 @@ type of apartments, price limits, amount of rooms and guests, and some features 
 
 You can also add your rental ad using a convenient form.
 
-
-## Demo site
-
-[Go to Keksobooking >>](https://lisabazdyreva.github.io/keksobooking/)
-
 ## Stack
 
 - Vanilla Javascript (ES18)
 - Leaflet
 
-## How to run app:
+
+## Demo site
+
+[Go to Keksobooking >>](https://lisabazdyreva.github.io/keksobooking/)
+
+
+## How to run app locally:
+
+```bash
+npm start
+```
+
+- Clone repo with:
+git clone git@github.com:BentonFraizer/keksobooking.git
+go into the project folder with:
+cd keksobooking/
+install all dependencies with:
+npm install
+run in the dev mode with:
+npm start
 
 
