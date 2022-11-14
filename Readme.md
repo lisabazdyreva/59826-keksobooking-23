@@ -26,7 +26,7 @@ You can also add your rental ad using a convenient form.
 
 
 
-- Clone repo with:
+- Clone repository:
 ```bash
 git clone git@github.com:lisabazdyreva/keksobooking.git
 ```
