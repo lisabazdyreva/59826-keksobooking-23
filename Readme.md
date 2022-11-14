@@ -13,7 +13,7 @@ You can also add your rental ad using a convenient form.
 
 ## Demo site
 
-[Go to Keksobooking >>](lisabazdyreva.github.io/keksobooking/)
+[Go to Keksobooking >>](https://lisabazdyreva.github.io/keksobooking/)
 
 ## Stack
 
